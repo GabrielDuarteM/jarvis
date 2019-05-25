@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import useElectronContext from '../../context/Electron'
+import useResultsContext from '../../context/Results/Results'
 
 const Input = styled.input`
   width: 100%;
@@ -10,24 +10,13 @@ const Input = styled.input`
   line-height: 60px;
   height: 100%;
   font-family: Raleway;
+  font-size: 26px;
 `
 
-const useSetSize = (width, height, ms) => {
-  const { window } = useElectronContext()
-  React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      window.setMinimumSize(width, height)
-    }, ms)
-
-    return () => clearTimeout(timeout)
-  }, [window, ms, width, height])
-}
-
 const MainInput = () => {
-  useSetSize(650, 200, 3000)
-  useSetSize(650, 65, 6000)
+  const { search, setSearch } = useResultsContext()
 
-  return <Input />
+  return <Input value={search} onChange={(e) => setSearch(e.target.value)} />
 }
 
 export default MainInput
