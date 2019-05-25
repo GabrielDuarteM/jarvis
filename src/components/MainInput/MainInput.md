@@ -3,5 +3,10 @@ name: MainInput
 ---
 
 import MainInput from './MainInput'
+import { Playground } from 'docz'
 
-<MainInput />
+# MainInput
+
+<Playground>
+  <MainInput />
+</Playground>

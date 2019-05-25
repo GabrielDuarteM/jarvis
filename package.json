@@ -25,7 +25,7 @@
     "styleguide:docz": "docz dev"
   },
   "resolutions": {
-    "docz/**/webpack": "4.28.4",
+    "docz/**/webpack": "4.32.2",
     "react-hot-loader": "4.8.8"
   },
   "dependencies": {

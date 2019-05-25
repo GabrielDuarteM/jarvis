@@ -6,7 +6,9 @@ const config = {
       preprocessor: 'postcss',
     }),
   ],
+  codeSandbox: false,
   wrapper: 'src/components/StyleguideWrapper',
+  menu: ['Readme'],
 }
 
 export default config
