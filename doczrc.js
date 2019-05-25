@@ -1,11 +1,11 @@
-import { css } from 'docz-plugin-css'
-
 const config = {
-  plugins: [
-    css({
-      preprocessor: 'postcss',
-    }),
-  ],
+  modifyBundlerConfig: (bundlerConfig) => {
+    bundlerConfig.module.rules.push({
+      test: /.css$/,
+      use: ['style-loader', 'css-loader'],
+    })
+    return bundlerConfig
+  },
   codeSandbox: false,
   wrapper: 'src/components/StyleguideWrapper',
   menu: ['Readme'],
