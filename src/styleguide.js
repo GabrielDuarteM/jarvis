@@ -9,10 +9,18 @@ function createWindow() {
     },
   })
 
+  const {
+    default: installExtension,
+    REACT_DEVELOPER_TOOLS,
+  } = require('electron-devtools-installer')
+
+  installExtension(REACT_DEVELOPER_TOOLS)
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log('An error occurred: ', err))
+
   mainWindow.loadURL('http://localhost:3000')
 
   // Open the DevTools.
-  // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
   mainWindow.webContents.openDevTools({ mode: 'detach' })
 
   mainWindow.on('closed', () => (mainWindow = null))
