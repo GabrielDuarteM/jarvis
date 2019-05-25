@@ -1,0 +1,68 @@
+{
+  "name": "jarvis",
+  "description": "Extendable open-source application launcher",
+  "version": "1.0.0-dev",
+  "main": "public/electron.js",
+  "author": {
+    "name": "Gabriel Duarte",
+    "email": "gabrielqduarte@gmail.com",
+    "url": "https://github.com/GabrielDuarteM"
+  },
+  "private": true,
+  "scripts": {
+    "start": "run-p --race start:*",
+    "start:react": "react-scripts start",
+    "start:electron": "wait-on http://localhost:3000 && electron .",
+    "lint": "eslint src/**/*.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "electron-builder",
+    "styleguide": "run-p --race styleguide:*",
+    "styleguide:electron": "wait-on http://localhost:3000 && electron src/styleguide.js",
+    "styleguide:docz": "docz dev"
+  },
+  "resolutions": {
+    "docz/**/webpack": "4.28.4",
+    "react-hot-loader": "4.8.8"
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.1.0",
+    "gd-configs": "^6.0.3",
+    "modern-normalize": "^0.5.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
+    "styled-components": "^4.2.0",
+    "typeface-raleway": "^0.0.54",
+    "typeface-roboto": "^0.0.54"
+  },
+  "devDependencies": {
+    "docz": "^1.2.0",
+    "docz-plugin-css": "^0.11.0",
+    "docz-theme-default": "^1.2.0",
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "typescript": "^3.4.5",
+    "wait-on": "^3.2.0"
+  },
+  "homepage": "./",
+  "browserslist": {
+    "production": [
+      "last 1 chrome version"
+    ],
+    "development": [
+      "last 1 chrome version"
+    ]
+  }
+}

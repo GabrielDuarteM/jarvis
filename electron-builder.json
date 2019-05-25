@@ -1,0 +1,21 @@
+{
+  "appId": "com.jarvisapp.Jarvis",
+  "productName": "Jarvis",
+  "directories": {
+    "output": "release"
+  },
+  "linux": {
+    "target": [
+      {
+        "target": "deb",
+        "arch": ["x64"]
+      },
+      {
+        "target": "AppImage",
+        "arch": ["x64"]
+      }
+    ],
+    "category": "Utility"
+  },
+  "files": ["package.json", "build/**/*"]
+}
