@@ -1,4 +1,7 @@
 const config = {
+  themeConfig: {
+    mode: 'dark',
+  },
   modifyBundlerConfig: (bundlerConfig) => {
     bundlerConfig.module.rules.push({
       test: /.css$/,
