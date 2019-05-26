@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
+import ResultList from '../ResultList'
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.background};
@@ -16,6 +17,7 @@ const App = () => {
     <StyledApp>
       <GlobalStyles />
       <MainInput />
+      <ResultList />
     </StyledApp>
   )
 }
