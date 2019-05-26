@@ -5,6 +5,8 @@ import Result from '../Result'
 
 const StyledResults = styled.div`
   margin: 8px 0;
+  min-width: 0;
+  flex: 0 0 300px;
 `
 
 const ResultList = () => {

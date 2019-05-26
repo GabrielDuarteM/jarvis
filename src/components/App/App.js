@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
 import ResultList from '../ResultList'
+import Preview from '../Preview'
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.background};
@@ -12,12 +13,19 @@ const StyledApp = styled.div`
   flex-direction: column;
 `
 
+const ResultsView = styled.div`
+  display: flex;
+`
+
 const App = () => {
   return (
     <StyledApp>
       <GlobalStyles />
       <MainInput />
-      <ResultList />
+      <ResultsView>
+        <ResultList />
+        <Preview />
+      </ResultsView>
     </StyledApp>
   )
 }
