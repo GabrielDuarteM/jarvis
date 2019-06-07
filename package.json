@@ -41,7 +41,7 @@
   "devDependencies": {
     "docz": "1.2.0",
     "docz-theme-default": "1.2.0",
-    "electron": "5.0.2",
+    "electron": "5.0.3",
     "electron-builder": "20.41.0",
     "electron-devtools-installer": "2.2.4",
     "eslint-config-prettier": "4.3.0",
