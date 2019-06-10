@@ -3,7 +3,7 @@ import React from 'react'
 import Providers from '../Providers'
 import GlobalStyles from '../GlobalStyles'
 
-const StyleguideWrapper = ({ children }) => {
+const StyleguideWrapper: React.FC = ({ children }) => {
   return (
     <>
       <GlobalStyles />

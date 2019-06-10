@@ -1,4 +1,4 @@
-const defaultConfig = require('gd-configs/eslint/web')
+const defaultConfig = require('gd-configs/eslint/ts/web')
 
 const config = {
   ...defaultConfig,

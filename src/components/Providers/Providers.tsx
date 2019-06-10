@@ -3,11 +3,11 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components/macro'
 import { ElectronProvider } from '../../context/Electron/Electron'
 import { ResultsProvider } from '../../context/Results/Results'
-import theme from '../../themes/dark'
+import dark from '../../themes/dark'
 
-const Providers = ({ children }) => {
+const Providers: React.FC = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={dark}>
       <ResultsProvider>
         <ElectronProvider>{children}</ElectronProvider>
       </ResultsProvider>

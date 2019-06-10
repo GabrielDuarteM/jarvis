@@ -2,6 +2,7 @@ const config = {
   themeConfig: {
     mode: 'dark',
   },
+  typescript: true,
   modifyBundlerConfig: (bundlerConfig) => {
     bundlerConfig.module.rules.push({
       test: /.css$/,

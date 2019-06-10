@@ -1,4 +1,6 @@
-const theme = {
+import Theme from './Theme'
+
+const dark: Theme = {
   background: '#121212',
   fonts: {
     primary: 'rgba(255,255,255,87%)',
@@ -24,4 +26,4 @@ const theme = {
   ],
 }
 
-export default theme
+export default dark

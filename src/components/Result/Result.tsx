@@ -7,7 +7,7 @@ const truncate = css`
   text-overflow: ellipsis;
 `
 
-const StyledResult = styled.div`
+const StyledResult = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 8px 16px;
@@ -31,7 +31,12 @@ const Description = styled.div`
   ${truncate}
 `
 
-const Result = ({ children, description, selected }) => {
+interface Props {
+  description: string
+  selected: boolean
+}
+
+const Result: React.FC<Props> = ({ children, description, selected }) => {
   return (
     <StyledResult selected={selected}>
       <ItemText>

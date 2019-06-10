@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import useResultsContext from '../../context/Results/Results'
+import useResultsContext from '../../context/Results'
 
 const Input = styled.input`
   width: 100%;
