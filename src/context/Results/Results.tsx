@@ -1,5 +1,5 @@
 import React from 'react'
-import getContext from '../getContext'
+import createContext from '../../helpers/createContext'
 
 interface Result {
   title: string
@@ -13,28 +13,22 @@ type SetStateAction<T> = React.Dispatch<React.SetStateAction<T>>
 interface State {
   search: string
   setSearch: SetStateAction<string>
-  results: Result[] | undefined
-  setResults: SetStateAction<Result[] | undefined>
+  results: Result[]
+  setResults: SetStateAction<Result[]>
   preview: string | undefined
   setPreview: SetStateAction<string | undefined>
   selected: number | undefined
 }
 
-const ResultsContext = React.createContext<State | undefined>(undefined)
-
-const useResultsContext = () => {
-  const context = getContext<State>(React.useContext(ResultsContext))
-
-  return context
-}
+const [useResultsContext, ResultsInternalProvider] = createContext<State>()
 
 export const ResultsProvider: React.FC = ({ children }) => {
   const [search, setSearch] = React.useState('')
-  const [results, setResults] = React.useState<Result[]>()
+  const [results, setResults] = React.useState<Result[]>([])
   const [preview, setPreview] = React.useState<string>()
   const [selected, setSelected] = React.useState<number>()
 
-  const s: SetStateAction<Result[] | undefined> = setResults
+  const s: SetStateAction<Result[]> = setResults
 
   console.log(s)
 
@@ -56,7 +50,7 @@ export const ResultsProvider: React.FC = ({ children }) => {
   }, [search])
 
   return (
-    <ResultsContext.Provider
+    <ResultsInternalProvider
       value={{
         search,
         setSearch,
@@ -68,7 +62,7 @@ export const ResultsProvider: React.FC = ({ children }) => {
       }}
     >
       {children}
-    </ResultsContext.Provider>
+    </ResultsInternalProvider>
   )
 }
 
