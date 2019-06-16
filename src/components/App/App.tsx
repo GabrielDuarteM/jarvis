@@ -3,8 +3,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
-import ResultList from '../ResultList'
-import Preview from '../Preview'
+import ResultsView from '../ResultsView'
 import useResultsContext from '../../context/Results'
 import useElectronContext from '../../context/Electron'
 import { SIZES } from '../../constants'
@@ -14,10 +13,6 @@ const StyledApp = styled.div`
   color: ${(props) => props.theme.fonts.primary};
   display: flex;
   flex-direction: column;
-`
-
-const ResultsView = styled.div`
-  display: flex;
 `
 
 const useResizing = () => {
@@ -36,10 +31,7 @@ const App = () => {
     <StyledApp>
       <GlobalStyles />
       <MainInput />
-      <ResultsView>
-        <ResultList />
-        <Preview />
-      </ResultsView>
+      <ResultsView />
     </StyledApp>
   )
 }

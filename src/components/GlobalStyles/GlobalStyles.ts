@@ -13,6 +13,9 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     font-family: Roboto
   }
+  html {
+    overflow: hidden // Stop this flicker: https://gifyu.com/image/ELxQ
+  }
 `
 export default GlobalStyles
 
