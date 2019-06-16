@@ -5,6 +5,9 @@ import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
 import ResultList from '../ResultList'
 import Preview from '../Preview'
+import useResultsContext from '../../context/Results'
+import useElectronContext from '../../context/Electron'
+import { SIZES } from '../../constants'
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.background};
@@ -17,7 +20,18 @@ const ResultsView = styled.div`
   display: flex;
 `
 
+const useResizing = () => {
+  const { search } = useResultsContext()
+  const { window } = useElectronContext()
+
+  React.useEffect(() => {
+    window.setMinimumSize(650, search ? 500 : SIZES.INPUT.height)
+  }, [search, window])
+}
+
 const App = () => {
+  useResizing()
+
   return (
     <StyledApp>
       <GlobalStyles />

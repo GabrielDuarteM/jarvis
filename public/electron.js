@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { app, BrowserWindow } = require('electron')
-
 const path = require('path')
 const isDev = require('electron-is-dev')
+
+const { SIZES } = require('../src/constants')
 
 let mainWindow
 
 function createWindow() {
+  console.log('SIZES', SIZES.INPUT)
   mainWindow = new BrowserWindow({
     width: 650,
-    height: 65,
+    height: SIZES.INPUT.height,
     frame: false,
     resizable: false,
     webPreferences: {
