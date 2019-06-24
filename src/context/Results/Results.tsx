@@ -1,12 +1,7 @@
 import React from 'react'
 import createContext from '../../helpers/createContext'
-
-interface Result {
-  title: string
-  description: string
-  icon: string
-  preview: string
-}
+import Result from '../../typings/Results'
+import usePluginsContext from '../Plugins'
 
 type SetStateAction<T> = React.Dispatch<React.SetStateAction<T>>
 
@@ -28,26 +23,19 @@ export const ResultsProvider: React.FC = ({ children }) => {
   const [preview, setPreview] = React.useState<string>()
   const [selected, setSelected] = React.useState<number>()
 
-  const s: SetStateAction<Result[]> = setResults
-
-  console.log(s)
+  const { list } = usePluginsContext()
 
   React.useEffect(() => {
-    setResults(
-      search.split('').map((value, index) => ({
-        title: `${search} ${index}`,
-        description: `I describe ${search} ${index}`,
-        icon: '',
-        preview: `Hey, I'm a preview for ${search} ${index}`,
-      })),
-    )
+    const resultsFromPlugins = list.flatMap((plugin) => plugin.search(search))
+
+    setResults(resultsFromPlugins)
 
     if (search.length > 2) {
       setSelected(2)
     } else {
       setSelected(undefined)
     }
-  }, [search])
+  }, [list, search])
 
   return (
     <ResultsInternalProvider

@@ -1,4 +1,4 @@
-import Theme from './Theme'
+import Theme from '../typings/Theme'
 
 const dark: Theme = {
   background: '#121212',
