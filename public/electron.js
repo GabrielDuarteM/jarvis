@@ -8,7 +8,6 @@ const { SIZES } = require('../src/constants')
 let mainWindow
 
 function createWindow() {
-  console.log('SIZES', SIZES.INPUT)
   mainWindow = new BrowserWindow({
     width: 650,
     height: SIZES.INPUT.height,
