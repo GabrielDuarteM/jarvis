@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 
@@ -16,6 +16,16 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+  })
+
+  globalShortcut.register('Alt+Space', () => {
+    const isVisible = mainWindow.isVisible()
+
+    if (isVisible) {
+      mainWindow.hide()
+    } else {
+      mainWindow.show()
+    }
   })
 
   if (isDev) {
