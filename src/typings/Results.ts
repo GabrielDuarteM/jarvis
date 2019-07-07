@@ -3,5 +3,5 @@ export default interface Result {
   description: string
   icon: string
   preview: string
+  completeTerm: string
 }
-

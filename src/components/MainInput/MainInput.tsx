@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import useResultsContext from '../../context/Results'
 
 const Input = styled.input`
   width: 100%;
@@ -15,10 +14,27 @@ const Input = styled.input`
   ${(props) => props.theme.elevation[2]};
 `
 
-const MainInput = () => {
-  const { search, setSearch } = useResultsContext()
+const useFocusOnVisibilityChange = (input: HTMLInputElement | null) => {
+  React.useEffect(() => {
+    const focusOnVisible = () => {
+      if (input && document.visibilityState === 'visible') {
+        input.focus()
+      }
+    }
 
-  return <Input value={search} onChange={(e) => setSearch(e.target.value)} />
+    document.addEventListener('visibilitychange', focusOnVisible)
+
+    return () =>
+      document.removeEventListener('visibilitychange', focusOnVisible)
+  }, [input])
+}
+
+const MainInput = ({ ...props }) => {
+  const inputRef = React.useRef(null)
+
+  useFocusOnVisibilityChange(inputRef.current)
+
+  return <Input ref={inputRef} autoFocus {...props} />
 }
 
 export default MainInput

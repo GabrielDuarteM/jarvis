@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/macro'
+import { GetItemPropsOptions } from 'downshift'
+
 import useResultsContext from '../../context/Results'
 import Result from '../Result'
+import ResultType from '../../typings/Results'
 
 const StyledResults = styled.div`
   margin: 8px 0;
@@ -9,26 +12,29 @@ const StyledResults = styled.div`
   flex: 0 0 300px;
 `
 
-const ResultList = () => {
-  const { results, selected } = useResultsContext()
-
-  if (!results || results.length === 0) {
-    return null
-  }
-
-  return (
-    <StyledResults>
-      {results.map((result, index) => (
-        <Result
-          key={index}
-          selected={selected === index}
-          description={result.description}
-        >
-          {result.title}
-        </Result>
-      ))}
-    </StyledResults>
-  )
+interface Props {
+  getItemProps: (options: GetItemPropsOptions<ResultType>) => any
 }
+
+const ResultList = React.forwardRef<HTMLDivElement, Props>(
+  ({ getItemProps, ...props }, ref) => {
+    const { results, selected } = useResultsContext()
+
+    return (
+      <StyledResults ref={ref} {...props}>
+        {results.map((result, index) => (
+          <Result
+            key={index}
+            selected={selected === index}
+            description={result.description}
+            {...getItemProps({ item: result })}
+          >
+            {result.title}
+          </Result>
+        ))}
+      </StyledResults>
+    )
+  },
+)
 
 export default ResultList

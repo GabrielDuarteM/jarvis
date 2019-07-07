@@ -1,12 +1,14 @@
 import React from 'react'
 
 import styled from 'styled-components/macro'
+import Downshift from 'downshift'
 import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
 import ResultsView from '../ResultsView'
 import useResultsContext from '../../context/Results'
 import useElectronContext from '../../context/Electron'
 import { SIZES } from '../../constants'
+import Result from '../../typings/Results'
 
 const StyledApp = styled.div`
   background: ${(props) => props.theme.background};
@@ -27,11 +29,31 @@ const useResizing = () => {
 const App = () => {
   useResizing()
 
+  const { setSearch, setSelected } = useResultsContext()
   return (
     <StyledApp>
       <GlobalStyles />
-      <MainInput />
-      <ResultsView />
+
+      <Downshift
+        itemToString={(result: Result) => result && result.completeTerm}
+        onInputValueChange={(value) => setSearch(value || '')}
+      >
+        {({ getInputProps, getItemProps, getMenuProps, highlightedIndex }) => {
+          const inputProps = getInputProps()
+          const menuProps = getMenuProps()
+
+          return (
+            <div>
+              <MainInput {...inputProps} />
+              <ResultsView
+                highlightedIndex={highlightedIndex}
+                {...menuProps}
+                getItemProps={getItemProps}
+              />
+            </div>
+          )
+        }}
+      </Downshift>
     </StyledApp>
   )
 }
