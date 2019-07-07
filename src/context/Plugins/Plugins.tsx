@@ -1,6 +1,7 @@
 import React from 'react'
 import createContext from '../../helpers/createContext'
 import Plugin from '../../typings/Plugin'
+import SnippetPlugin from '../../plugins/snippet/Snippet'
 
 const MockPlugin: Plugin = {
   name: 'Mock Plugin',
@@ -9,24 +10,7 @@ const MockPlugin: Plugin = {
       title: `result is ${search} ${index}`,
       completeTerm: search,
       description: `I describe ${search} ${index}`,
-      icon: '',
       preview: `Hey, I'm a preview for ${search} ${index}`,
-    }))
-  },
-}
-
-const SnippetPlugin: Plugin = {
-  name: 'Snippets',
-  activationString: 'snip ',
-  search: (search) => {
-    const snippets = ['address', 'phone']
-
-    return snippets.map((snip) => ({
-      title: `Text snippet: ${snip}`,
-      completeTerm: `snip ${snip}`,
-      description: 'copy the snippet to the clipboard',
-      icon: '',
-      preview: '',
     }))
   },
 }

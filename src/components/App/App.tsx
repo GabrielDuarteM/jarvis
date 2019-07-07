@@ -28,8 +28,9 @@ const useResizing = () => {
 
 const App = () => {
   useResizing()
+  const { clipboard } = useElectronContext()
 
-  const { setSearch, setSelected } = useResultsContext()
+  const { setSearch } = useResultsContext()
   return (
     <StyledApp>
       <GlobalStyles />
@@ -37,6 +38,12 @@ const App = () => {
       <Downshift
         itemToString={(result: Result) => result && result.completeTerm}
         onInputValueChange={(value) => setSearch(value || '')}
+        defaultHighlightedIndex={0}
+        onSelect={(item: Result) => {
+          if (item.onSelect) {
+            item.onSelect({ clipboard })
+          }
+        }}
       >
         {({ getInputProps, getItemProps, getMenuProps, highlightedIndex }) => {
           const inputProps = getInputProps()

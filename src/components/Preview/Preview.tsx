@@ -10,7 +10,7 @@ const StyledPreview = styled.div`
 const Preview = () => {
   const { selected, results } = useResultsContext()
 
-  if (!selected || !results || !results[selected]) {
+  if (selected === undefined || !results || !results[selected]) {
     return null
   }
 
