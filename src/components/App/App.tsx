@@ -18,29 +18,34 @@ const StyledApp = styled.div`
 `
 
 const useResizing = () => {
-  const { search } = useResultsContext()
+  const { searchTerm } = useResultsContext()
   const { window } = useElectronContext()
 
   React.useEffect(() => {
-    window.setMinimumSize(650, search ? 500 : SIZES.INPUT.height)
-  }, [search, window])
+    window.setMinimumSize(650, searchTerm ? 500 : SIZES.INPUT.height)
+  }, [searchTerm, window])
 }
 
 const App = () => {
   useResizing()
   const { clipboard } = useElectronContext()
 
-  const { setSearch } = useResultsContext()
+  const { dispatch } = useResultsContext()
   return (
     <StyledApp>
       <GlobalStyles />
 
       <Downshift
         itemToString={(result: Result) => result && result.completeTerm}
-        onInputValueChange={(value) => setSearch(value || '')}
+        onInputValueChange={(value) =>
+          dispatch({
+            type: 'change-search-term',
+            payload: { searchTerm: value || '' },
+          })
+        }
         defaultHighlightedIndex={0}
         onSelect={(item: Result) => {
-          if (item.onSelect) {
+          if (item && item.onSelect) {
             item.onSelect({ clipboard })
           }
         }}

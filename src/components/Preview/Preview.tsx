@@ -8,13 +8,17 @@ const StyledPreview = styled.div`
 `
 
 const Preview = () => {
-  const { selected, results } = useResultsContext()
+  const { highlighted, orderedResult } = useResultsContext()
 
-  if (selected === undefined || !results || !results[selected]) {
+  if (
+    highlighted === undefined ||
+    !orderedResult ||
+    !orderedResult[highlighted]
+  ) {
     return null
   }
 
-  return <StyledPreview>{results[selected].preview}</StyledPreview>
+  return <StyledPreview>{orderedResult[highlighted].preview}</StyledPreview>
 }
 
 export default Preview

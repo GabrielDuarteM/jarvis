@@ -1,8 +1,7 @@
-import Result from './Results'
+import { PluginReducer } from '../context/Results/resultsReducer'
 
 export default interface Plugin {
   name: string
-  search: (term: string) => Result[]
-  activationString?: string
+  id: string
+  reducer: PluginReducer
 }
-

@@ -18,14 +18,14 @@ interface Props {
 
 const ResultList = React.forwardRef<HTMLDivElement, Props>(
   ({ getItemProps, ...props }, ref) => {
-    const { results, selected } = useResultsContext()
+    const { orderedResult, highlighted } = useResultsContext()
 
     return (
       <StyledResults ref={ref} {...props}>
-        {results.map((result, index) => (
+        {orderedResult.map((result, index) => (
           <Result
             key={index}
-            selected={selected === index}
+            selected={highlighted === index}
             description={result.description}
             {...getItemProps({ item: result })}
           >

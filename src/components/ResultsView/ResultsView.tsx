@@ -24,15 +24,18 @@ const StyledResultsView = styled.div<StyledResultsViewProps>`
 
 const ResultsView: React.FC<Props> = React.forwardRef<HTMLDivElement, Props>(
   ({ getItemProps, highlightedIndex, ...props }, ref) => {
-    const { search, setSelected } = useResultsContext()
+    const { searchTerm, dispatch } = useResultsContext()
 
     React.useEffect(() => {
-      setSelected(highlightedIndex)
-    }, [highlightedIndex, setSelected])
+      dispatch({
+        type: 'change-highlighted',
+        payload: { highlighted: highlightedIndex },
+      })
+    }, [dispatch, highlightedIndex])
 
     return (
       <StyledResultsView
-        height={search ? 500 - SIZES.INPUT.height : 0}
+        height={searchTerm ? 500 - SIZES.INPUT.height : 0}
         {...props}
       >
         <ResultList {...props} ref={ref} getItemProps={getItemProps} />

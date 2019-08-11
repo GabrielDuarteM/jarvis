@@ -1,79 +1,34 @@
 import React from 'react'
 import createContext from '../../helpers/createContext'
-import Result from '../../typings/Results'
 import usePluginsContext from '../Plugins'
-import Plugin from '../../typings/Plugin'
+import resultsReducer, {
+  INITIAL_STATE,
+  ResultsAction,
+  ResultsState,
+} from './resultsReducer'
+import Result from '../../typings/Results'
 
-type SetStateAction<T> = React.Dispatch<React.SetStateAction<T>>
-
-interface State {
-  search: string
-  setSearch: SetStateAction<string>
-  results: Result[]
-  setResults: SetStateAction<Result[]>
-  preview: string | undefined
-  setPreview: SetStateAction<string | undefined>
-  selected: number | undefined
-  setSelected: SetStateAction<number | undefined>
+interface State extends ResultsState {
+  dispatch: React.Dispatch<ResultsAction>
+  orderedResult: Result[]
 }
 
 const [useResultsContext, ResultsInternalProvider] = createContext<State>()
 
-const usePluginSearch = (
-  search: string,
-  setResults: SetStateAction<Result[]>,
-) => {
-  const { list } = usePluginsContext()
-
-  React.useEffect(() => {
-    const pluginWithActivationString: Plugin | undefined = list.find(
-      (plugin) =>
-        plugin.activationString && search.startsWith(plugin.activationString),
-    )
-
-    if (pluginWithActivationString) {
-      const resultsFromPlugins = pluginWithActivationString.search(search)
-      setResults(resultsFromPlugins)
-
-      return
-    }
-
-    const resultsFromPlugins = list.flatMap((plugin) => {
-      if (
-        !plugin.activationString ||
-        search.startsWith(plugin.activationString)
-      ) {
-        return plugin.search(search)
-      }
-
-      return []
-    })
-
-    setResults(resultsFromPlugins)
-  }, [list, search, setResults])
-}
-
 export const ResultsProvider: React.FC = ({ children }) => {
-  const [search, setSearch] = React.useState('')
-  const [results, setResults] = React.useState<Result[]>([])
-  const [preview, setPreview] = React.useState<string>()
-  const [selected, setSelected] = React.useState<number>()
+  const { list: plugins } = usePluginsContext()
+  const pluginReducers = plugins.map((x) => x.reducer)
+  const [state, dispatch] = React.useReducer(
+    resultsReducer(pluginReducers),
+    INITIAL_STATE,
+  )
 
-  usePluginSearch(search, setResults)
+  const orderedResult: Result[] = Object.values(state.results).flatMap(
+    (value) => value,
+  )
 
   return (
-    <ResultsInternalProvider
-      value={{
-        search,
-        setSearch,
-        results,
-        setResults,
-        preview,
-        setPreview,
-        selected,
-        setSelected,
-      }}
-    >
+    <ResultsInternalProvider value={{ ...state, orderedResult, dispatch }}>
       {children}
     </ResultsInternalProvider>
   )

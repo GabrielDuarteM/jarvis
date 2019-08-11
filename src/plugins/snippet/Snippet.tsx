@@ -41,41 +41,62 @@ const ACTIVATION_STRING = 'snip '
 const removeActivationString = (search: string) =>
   search.replace(new RegExp(ACTIVATION_STRING), '')
 
+const id = 'snippets'
+
 const SnippetPlugin: Plugin = {
   name: 'Snippets',
-  activationString: ACTIVATION_STRING,
-  search: (searchWithActivationString) => {
-    const search = removeActivationString(searchWithActivationString)
-    const foundResults: Result[] = snippets
-      .filter((snippet) => snippet.name.includes(search))
-      .map((snip) => ({
-        title: `Text snippet: ${snip.name}`,
-        completeTerm: `snip ${snip.name}`,
-        description: 'copy the snippet to the clipboard',
-        icon: '',
-        preview: snip.content,
-        onSelect: ({ clipboard }) => {
-          clipboard.writeText(snip.content)
-        },
-      }))
+  id: 'snippets',
+  reducer: (state, action) => {
+    if (action.type === 'change-search-term') {
+      if (action.payload.searchTerm.startsWith(ACTIVATION_STRING)) {
+        const search = removeActivationString(action.payload.searchTerm)
+        const foundResults: Result[] = snippets
+          .filter((snippet) => snippet.name.includes(search))
+          .map((snip) => ({
+            title: `Text snippet: ${snip.name}`,
+            completeTerm: `snip ${snip.name}`,
+            description: 'copy the snippet to the clipboard',
+            icon: '',
+            preview: snip.content,
+            onSelect: ({ clipboard }) => {
+              clipboard.writeText(snip.content)
+            },
+          }))
 
-    return [
-      ...foundResults,
-      {
-        title: `Create new snippet`,
-        description: 'Create a new snippet on the right panel',
-        completeTerm: 'snip create',
-        preview: (
-          <CreateNewSnippet
-            onSubmit={(snippet: Snippet) => {
-              if (!snippets.find((x) => x.name === snippet.name)) {
-                snippets.push(snippet)
-              }
-            }}
-          />
-        ),
-      },
-    ]
+        return {
+          ...state,
+          results: {
+            [id]: [
+              ...foundResults,
+              {
+                title: `Create new snippet`,
+                description: 'Create a new snippet on the right panel',
+                completeTerm: 'snip create',
+                preview: (
+                  <CreateNewSnippet
+                    onSubmit={(snippet: Snippet) => {
+                      if (!snippets.find((x) => x.name === snippet.name)) {
+                        snippets.push(snippet)
+                      }
+                    }}
+                  />
+                ),
+              },
+            ],
+          },
+        }
+      }
+
+      return {
+        ...state,
+        results: {
+          ...state.results,
+          [id]: [],
+        },
+      }
+    }
+
+    return state
   },
 }
 
