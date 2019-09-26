@@ -31,6 +31,7 @@ const App = () => {
   const { clipboard } = useElectronContext()
 
   const { dispatch } = useResultsContext()
+
   return (
     <StyledApp>
       <GlobalStyles />
@@ -49,6 +50,7 @@ const App = () => {
             item.onSelect({ clipboard })
           }
         }}
+        initialInputValue=""
       >
         {({ getInputProps, getItemProps, getMenuProps, highlightedIndex }) => {
           const inputProps = getInputProps()
