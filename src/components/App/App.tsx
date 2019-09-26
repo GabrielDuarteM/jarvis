@@ -23,6 +23,7 @@ const useResizing = () => {
 
   React.useEffect(() => {
     window.setMinimumSize(650, searchTerm ? 500 : SIZES.INPUT.height)
+    window.setSize(650, searchTerm ? 500 : SIZES.INPUT.height)
   }, [searchTerm, window])
 }
 
