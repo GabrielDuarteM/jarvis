@@ -138,11 +138,14 @@ const SnippetPlugin: Plugin<SnippetState, SnippetsActions> = {
           highlighted: results.snippets.length - 1,
         }
       }
-      case 'change-search-term':
+      case 'change-search-term': {
+        const results = getSnippetsResultList(state, action.payload.searchTerm)
+
         return {
           ...state,
-          results: getSnippetsResultList(state, action.payload.searchTerm),
+          results,
         }
+      }
 
       default:
         if (!state.snippets) {
