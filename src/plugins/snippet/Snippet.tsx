@@ -34,6 +34,8 @@ const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
           snippet: { name, content },
         },
       })
+      setName('')
+      setContent('')
     }
   }
 
@@ -46,12 +48,12 @@ const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
     <div>
       <div>
         <label>
-          Name: <input onChange={handleNameChange} />
+          Name: <input value={name} onChange={handleNameChange} />
         </label>
       </div>
       <div>
         <label>
-          Content: <textarea onChange={handleContentChange} />
+          Content: <textarea value={content} onChange={handleContentChange} />
         </label>
       </div>
       <button type="button" onClick={handleClick}>
