@@ -10,19 +10,24 @@ const CreateNewSnippet: React.FC<Props> = ({ onSubmit }) => {
   const [name, setName] = React.useState('')
   const [content, setContent] = React.useState('')
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setName(e.target.value)
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+    setContent(e.target.value)
+
   return (
     <div>
       <div>
         <label>
-          Name: <input onChange={(e) => setName(e.target.value)} />
+          Name: <input onChange={handleNameChange} />
         </label>
       </div>
       <div>
         <label>
-          Content: <textarea onChange={(e) => setContent(e.target.value)} />
+          Content: <textarea onChange={handleContentChange} />
         </label>
       </div>
-      <button type="button" onClick={() => onSubmit({ name, content })}>
+      <button type="button" onClick={handleClick}>
         Confirm
       </button>
     </div>
