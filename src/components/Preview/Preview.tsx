@@ -8,7 +8,7 @@ const StyledPreview = styled.div`
 `
 
 const Preview = () => {
-  const { highlighted, orderedResult } = useResultsContext()
+  const { highlighted, orderedResult, dispatch } = useResultsContext()
 
   if (
     highlighted === undefined ||
@@ -18,7 +18,19 @@ const Preview = () => {
     return null
   }
 
-  return <StyledPreview>{orderedResult[highlighted].preview}</StyledPreview>
+  const { preview } = orderedResult[highlighted]
+
+  const previewToRender =
+    preview &&
+    React.Children.map(
+      preview as React.ReactElement,
+      (child: React.ReactNode) =>
+        React.isValidElement(child)
+          ? React.cloneElement(child, { dispatch })
+          : child,
+    )
+
+  return <StyledPreview>{previewToRender}</StyledPreview>
 }
 
 export default Preview

@@ -1,7 +1,13 @@
-import { PluginReducer } from '../context/Results/resultsReducer'
+import {
+  PluginReducer,
+  ResultsState,
+  ResultsAction,
+} from '../context/Results/resultsReducer'
 
-export default interface Plugin {
+interface Plugin<CustomState = ResultsState, CustomActions = ResultsAction> {
   name: string
   id: string
-  reducer: PluginReducer
+  reducer: PluginReducer<CustomState, CustomActions>
 }
+
+export default Plugin

@@ -27,7 +27,10 @@ export type ResultsAction =
   | ChangePreview
   | ChangeHighlighted
 
-export type PluginReducer = React.Reducer<ResultsState, ResultsAction>
+export type PluginReducer<
+  CustomState = ResultsState,
+  CustomActions = ResultsAction
+> = React.Reducer<ResultsState & CustomState, ResultsAction | CustomActions>
 
 const resultsReducer = (pluginReducers: PluginReducer[]) => (
   state: ResultsState,
@@ -55,7 +58,8 @@ const resultsReducer = (pluginReducers: PluginReducer[]) => (
       break
 
     default:
-      throw new Error(`Unhandled type: ${(action as any).type}`)
+      newState = state
+      break
   }
 
   newState = pluginReducers.reduce((prevState, reducer) => {

@@ -12,7 +12,7 @@ const MockPlugin: Plugin = {
     if (action.type === 'change-search-term') {
       const { searchTerm } = action.payload
 
-      return {
+      const newState = {
         ...state,
         results: {
           ...state.results,
@@ -26,6 +26,8 @@ const MockPlugin: Plugin = {
           ],
         },
       }
+
+      return newState
     }
 
     return state
@@ -39,7 +41,7 @@ interface State {
 const [usePluginsContext, PluginsInternalProvider] = createContext<State>()
 
 export const PluginsProvider: React.FC = ({ children }) => {
-  const list: Plugin[] = [MockPlugin, SnippetPlugin]
+  const list: Plugin<any, any>[] = [MockPlugin, SnippetPlugin]
 
   return (
     <PluginsInternalProvider value={{ list }}>
