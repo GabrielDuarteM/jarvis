@@ -45,6 +45,7 @@ const App = () => {
             payload: { searchTerm: value || '' },
           })
         }
+        isOpen
         defaultHighlightedIndex={0}
         onSelect={(item: Result) => {
           if (item && item.onSelect) {
