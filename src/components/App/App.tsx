@@ -52,6 +52,12 @@ const App = () => {
             item.onSelect({ clipboard })
           }
         }}
+        stateReducer={(state, changes) => {
+          if (changes.type === Downshift.stateChangeTypes.blurInput) {
+            return {} // no-changes
+          }
+          return changes
+        }}
         initialInputValue=""
       >
         {({ getInputProps, getItemProps, getMenuProps, highlightedIndex }) => {
