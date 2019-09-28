@@ -8,7 +8,7 @@ import {
 } from '../../context/Results/resultsReducer'
 import Action from '../../typings/Action'
 
-type ChangeSnippets = Action<'change-snippets', { snippets: Snippet[] }>
+type ChangeSnippets = Action<'add-snippet', { snippet: Snippet }>
 
 type SnippetsActions = ChangeSnippets
 
@@ -29,9 +29,9 @@ const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
     if (!snippets.find((snippet) => snippet.name === name)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       dispatch!({
-        type: 'change-snippets',
+        type: 'add-snippet',
         payload: {
-          snippets: [...snippets, { name, content }],
+          snippet: { name, content },
         },
       })
     }
@@ -87,20 +87,20 @@ const mapSnippetToResult = (snip: Snippet): Result => ({
 const getSnippetsResultList = (
   state: SnippetState,
   searchTerm: string,
-  newSnippets: Snippet[] = [],
+  newSnippet?: Snippet,
 ) => {
   if (searchTerm.startsWith(ACTIVATION_STRING)) {
     const search = removeActivationString(searchTerm)
-    const foundResults: Result[] = state.snippets
+    const allSnippets = [...state.snippets, newSnippet].filter(
+      Boolean,
+    ) as Snippet[]
+    const foundResults: Result[] = allSnippets
       .filter((snippet) => snippet.name.includes(search))
       .map(mapSnippetToResult)
-
-    const newResults = newSnippets.map(mapSnippetToResult)
 
     const nextResults = {
       [id]: [
         ...foundResults,
-        ...newResults,
         {
           title: `Create new snippet`,
           description: 'Create a new snippet on the right panel',
@@ -123,16 +123,19 @@ const SnippetPlugin: Plugin<SnippetState, SnippetsActions> = {
   id: 'snippets',
   reducer: (state, action) => {
     switch (action.type) {
-      case 'change-snippets':
+      case 'add-snippet': {
+        const results = getSnippetsResultList(
+          state,
+          state.searchTerm,
+          action.payload.snippet,
+        )
         return {
           ...state,
-          results: getSnippetsResultList(
-            state,
-            state.searchTerm,
-            action.payload.snippets,
-          ),
-          snippets: action.payload.snippets,
+          results,
+          snippets: [...state.snippets, action.payload.snippet],
+          highlighted: results.snippets.length - 1,
         }
+      }
       case 'change-search-term':
         return {
           ...state,
