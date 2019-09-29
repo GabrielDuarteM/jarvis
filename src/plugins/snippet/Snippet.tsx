@@ -1,11 +1,7 @@
 import React from 'react'
 
 import Plugin from '../../typings/Plugin'
-import Result from '../../typings/Results'
-import {
-  ResultsAction,
-  ResultsState,
-} from '../../context/Results/resultsReducer'
+import Result, { ResultsState, ResultsAction } from '../../typings/Results'
 import Action from '../../typings/Action'
 
 type ChangeSnippets = Action<'add-snippet', { snippet: Snippet }>

@@ -1,12 +1,8 @@
 import React from 'react'
 import createContext from '../../helpers/createContext'
 import usePluginsContext from '../Plugins'
-import resultsReducer, {
-  INITIAL_STATE,
-  ResultsAction,
-  ResultsState,
-} from './resultsReducer'
-import Result from '../../typings/Results'
+import resultsReducer, { INITIAL_STATE } from './resultsReducer'
+import Result, { ResultsState, ResultsAction } from '../../typings/Results'
 
 interface State extends ResultsState {
   dispatch: React.Dispatch<ResultsAction>

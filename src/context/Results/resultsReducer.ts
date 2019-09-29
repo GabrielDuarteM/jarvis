@@ -1,13 +1,5 @@
 import React from 'react'
-import Result from '../../typings/Results'
-import Action from '../../typings/Action'
-
-export interface ResultsState {
-  searchTerm: string
-  results: { [id: string]: Result[] }
-  preview: React.ReactNode
-  highlighted: number
-}
+import { ResultsState, ResultsAction } from '../../typings/Results'
 
 export const INITIAL_STATE: ResultsState = {
   searchTerm: '',
@@ -15,17 +7,6 @@ export const INITIAL_STATE: ResultsState = {
   preview: null,
   highlighted: 0,
 }
-
-type ChangeSearch = Action<'change-search-term', { searchTerm: string }>
-type ChangeResults = Action<'change-results', { results: Result[] }>
-type ChangePreview = Action<'change-preview', { preview: React.ReactNode }>
-type ChangeHighlighted = Action<'change-highlighted', { highlighted: number }>
-
-export type ResultsAction =
-  | ChangeSearch
-  | ChangeResults
-  | ChangePreview
-  | ChangeHighlighted
 
 export type PluginReducer<
   CustomState = ResultsState,

@@ -1,8 +1,5 @@
-import {
-  PluginReducer,
-  ResultsState,
-  ResultsAction,
-} from '../context/Results/resultsReducer'
+import { PluginReducer } from '../context/Results/resultsReducer'
+import { ResultsState, ResultsAction } from './Results'
 
 interface Plugin<CustomState = ResultsState, CustomActions = ResultsAction> {
   name: string
