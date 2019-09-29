@@ -77,7 +77,7 @@ const id = 'snippets'
 
 const mapSnippetToResult = (snip: Snippet): Result => ({
   title: `Text snippet: ${snip.name}`,
-  completeTerm: `snip ${snip.name}`,
+  completeTerm: '',
   description: 'copy the snippet to the clipboard',
   icon: '',
   preview: snip.content,
