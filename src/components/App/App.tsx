@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styled from 'styled-components/macro'
-import Downshift from 'downshift'
+import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
 import GlobalStyles from '../GlobalStyles'
 import MainInput from '../MainInput'
 import ResultsView from '../ResultsView'
@@ -27,37 +27,52 @@ const useResizing = () => {
   }, [searchTerm, window])
 }
 
+type StateReducer = (
+  state: DownshiftState<Result>,
+  changes: StateChangeOptions<Result>,
+) => Partial<StateChangeOptions<Result>>
+
 const App = () => {
   useResizing()
   const { clipboard } = useElectronContext()
 
   const { dispatch } = useResultsContext()
 
+  const stateReducer: StateReducer = (_state, changes) => {
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.blurInput:
+        return {} // no-changes
+
+      default:
+        return changes
+    }
+  }
+
+  const itemToString = (result: Result) => result && result.completeTerm
+
+  const onInputValueChange = (value: string) =>
+    dispatch({
+      type: 'change-search-term',
+      payload: { searchTerm: value || '' },
+    })
+
+  const onSelect = (item: Result) => {
+    if (item && item.onSelect) {
+      item.onSelect({ clipboard, dispatch })
+    }
+  }
+
   return (
     <StyledApp>
       <GlobalStyles />
 
       <Downshift
-        itemToString={(result: Result) => result && result.completeTerm}
-        onInputValueChange={(value) =>
-          dispatch({
-            type: 'change-search-term',
-            payload: { searchTerm: value || '' },
-          })
-        }
+        itemToString={itemToString}
+        onInputValueChange={onInputValueChange}
         isOpen
         defaultHighlightedIndex={0}
-        onSelect={(item: Result) => {
-          if (item && item.onSelect) {
-            item.onSelect({ clipboard })
-          }
-        }}
-        stateReducer={(state, changes) => {
-          if (changes.type === Downshift.stateChangeTypes.blurInput) {
-            return {} // no-changes
-          }
-          return changes
-        }}
+        onSelect={onSelect}
+        stateReducer={stateReducer}
         initialInputValue=""
       >
         {({ getInputProps, getItemProps, getMenuProps, highlightedIndex }) => {
