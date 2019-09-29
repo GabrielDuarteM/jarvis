@@ -17,6 +17,6 @@ export default interface Theme {
     {
       background: string
       boxShadow: string
-    }
+    },
   ]
 }
