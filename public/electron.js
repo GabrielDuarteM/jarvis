@@ -17,6 +17,8 @@ function createWindow() {
       nodeIntegration: true,
     },
   })
+  const [positionX] = mainWindow.getPosition()
+  mainWindow.setPosition(positionX, 200)
 
   globalShortcut.register('Alt+Space', () => {
     const isVisible = mainWindow.isVisible()
