@@ -20,6 +20,7 @@ interface Props {
 const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
   const [name, setName] = React.useState('')
   const [content, setContent] = React.useState('')
+  const nameRef = React.useRef<HTMLInputElement>(null)
 
   const handleClick = () => {
     if (!snippets.find((snippet) => snippet.name === name)) {
@@ -32,6 +33,9 @@ const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
       })
       setName('')
       setContent('')
+      if (nameRef.current) {
+        nameRef.current.focus()
+      }
     }
   }
 
@@ -44,7 +48,7 @@ const CreateNewSnippet: React.FC<Props> = ({ dispatch, snippets }) => {
     <div>
       <div>
         <label>
-          Name: <input value={name} onChange={handleNameChange} />
+          Name: <input ref={nameRef} value={name} onChange={handleNameChange} />
         </label>
       </div>
       <div>
