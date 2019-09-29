@@ -2,6 +2,7 @@ import React from 'react'
 import createContext from '../../helpers/createContext'
 import Plugin from '../../typings/Plugin'
 import SnippetPlugin from '../../plugins/snippet/Snippet'
+import CorePlugin from '../../plugins/core/Core'
 
 const id = 'mock-plugin'
 
@@ -41,7 +42,7 @@ interface State {
 const [usePluginsContext, PluginsInternalProvider] = createContext<State>()
 
 export const PluginsProvider: React.FC = ({ children }) => {
-  const list: Plugin<any, any>[] = [MockPlugin, SnippetPlugin]
+  const list: Plugin<any, any>[] = [MockPlugin, SnippetPlugin, CorePlugin]
 
   return (
     <PluginsInternalProvider value={{ list }}>
