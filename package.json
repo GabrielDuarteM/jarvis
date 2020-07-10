@@ -25,7 +25,7 @@
     "downshift": "3.3.4",
     "electron-is-dev": "1.1.0",
     "gd-configs": "6.1.2",
-    "modern-normalize": "0.5.0",
+    "modern-normalize": "0.7.0",
     "react": "16.10.1",
     "react-dom": "16.10.1",
     "react-scripts": "3.1.2",
